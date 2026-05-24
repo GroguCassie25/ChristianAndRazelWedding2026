@@ -1,188 +1,498 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christian & Razel Wedding Monogram</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
-    
+    <meta charset="utf-8">
+    <title>Christian & Razel - Wedding</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        /* Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            /* Elegant off-white/champagne background from your screenshot example */
-            background: radial-gradient(circle, #f9f6f0 0%, #e0dacf 100%);
-            font-family: 'Cinzel', serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        :root { --primary: #e47a2e; --dark: #1a1a1a; --bg-light: #f4f1ea; }
+        body { font-family: 'Montserrat', sans-serif; color: #444; background-color: #fff; scroll-behavior: smooth; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        .font-secondary { font-family: 'Great Vibes', cursive; }
+        
+        /* Navbar */
+        .navbar { background: var(--dark) !important; padding: 10px 0; }
+        .nav-link { font-size: 10px; text-transform: uppercase; font-weight: 600; letter-spacing: 1.5px; color: #fff !important; }
+
+        /* Hero */
+        .hero-header {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://i.imgur.com/ab2ifdW.jpeg') center/cover no-repeat;
+            background-attachment: fixed;
+            display: flex; align-items: center; justify-content: center; color: white; text-align: center;
         }
 
-        /* 1. Animated Gold Bokeh Background */
-        .background-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            filter: blur(6px);
-            opacity: 0.5;
+        @media (max-width: 1024px) {
+            .hero-header { background-attachment: scroll; }
         }
 
-        /* 2. Main Container */
-        .led-container {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        /* Groom & Bride Section */
+        .couple-section { padding: 80px 0; background: #fff; }
+        .couple-img { width: 250px; height: 250px; object-fit: cover; border-radius: 50%; border: 5px solid var(--bg-light); margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .couple-name { font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; }
+
+        /* Story Section */
+        .story-section { padding: 80px 0; background: var(--bg-light); }
+        .story-content { max-width: 800px; margin: 0 auto; line-height: 1.8; font-size: 1.1rem; padding: 0 20px; }
+
+        /* Gallery */
+        .gallery-wrapper { position: relative; width: 100%; overflow: hidden; background: #000; padding: 120px 0 50px 0; }
+        .gallery-header-overlay {
+            position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
+            z-index: 10; text-align: center; width: 100%; color: #fff; pointer-events: none;
+        }
+        .gallery-container-scroll { 
+            display: flex; 
+            overflow-x: auto; 
+            scroll-behavior: smooth; 
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            padding: 0 10px;
+        }
+        .gallery-container-scroll::-webkit-scrollbar { display: none; }
+        
+        .gallery-item { 
+            flex: 0 0 85%; 
+            margin: 0 10px;
+            scroll-snap-align: center;
+            filter: brightness(0.8); transition: 0.5s; overflow: hidden; border-radius: 8px;
+        }
+
+        .gallery-item img { 
+            width: 100%; 
+            height: 350px; 
+            object-fit: cover; 
+            object-position: center; 
+        }
+
+        @media (min-width: 768px) {
+            .gallery-item { flex: 0 0 25%; filter: brightness(0.7); }
+            .gallery-item img { height: 500px; object-position: 50% 20%; }
+            .gallery-wrapper { padding: 0; }
+            .gallery-header-overlay { top: 15%; transform: translate(-50%, -50%); }
+        }
+        
+        .gallery-item:hover { filter: brightness(1.1); transform: scale(1.02); }
+
+        .slider-nav { position: absolute; top: 60%; width: 100%; display: flex; justify-content: space-between; transform: translateY(-50%); z-index: 11; padding: 0 10px; pointer-events: none; }
+        @media (min-width: 768px) { .slider-nav { top: 50%; } }
+        .nav-btn { background: rgba(255,255,255,0.8); color: var(--primary); width: 40px; height: 40px; border-radius: 5px; display: flex; align-items: center; justify-content: center; cursor: pointer; pointer-events: auto; border: none; }
+
+        /* Entourage */
+        .entourage-container { background: #fff; padding: 80px 0; }
+        .main-role-title { font-weight: 700; color: #111; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; display: block; font-size: 1.1rem; text-decoration: underline; text-underline-offset: 8px; text-decoration-color: var(--primary); }
+        .role-title { font-weight: 700; color: #333; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; font-size: 0.8rem; }
+        .name-list { font-size: 0.9rem; line-height: 1.8; color: #555; margin-bottom: 25px; list-style: none; padding: 0; }
+        .bearer-icon { color: var(--primary); font-size: 1.6rem; margin-bottom: 10px; display: block; }
+        .parent-title { font-weight: 700; font-style: italic; color: #222; font-size: 1.1rem; margin-bottom: 15px; display: block; }
+
+        @media (max-width: 767px) {
+            .name-list li { padding: 2px 0; }
+            .border-right { border-right: none !important; }
+        }
+
+        /* DRESS CODE */
+        .color-circle { width: 35px; height: 35px; border-radius: 50%; display: inline-block; margin: 5px 8px; border: 1px solid #ddd; }
+        .attire-label { font-size: 0.85rem; letter-spacing: 1px; color: #666; font-weight: 600; margin-top: 5px; }
+
+        /* GIFT GUIDE */
+        .gift-section { background: var(--bg-light); padding: 80px 0; }
+        .gift-card { 
+            background: #fff; border-radius: 20px; padding: 50px 30px; 
+            max-width: 700px; margin: 0 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+            border: 1px solid rgba(228, 122, 46, 0.2);
             text-align: center;
         }
+        @media (min-width: 768px) { .gift-card { margin: auto; } }
+        .gift-text { font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 30px; }
+        .gift-icon { font-size: 3rem; color: var(--primary); margin-bottom: 20px; }
 
-        /* 3. Luxury Metallic Gold Monogram Ring */
-        .monogram-circle {
-            position: relative;
-            width: 48vh;
-            height: 48vh;
-            border: 4px solid transparent;
-            /* Multi-stop gold gradient for a metallic gleam */
-            border-image: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%) 1;
-            border-radius: 50%;
-            clip-path: circle(50% at 50% 50%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-            animation: fadeInRing 3s ease-out forwards;
-            box-shadow: 0 10px 40px rgba(170, 119, 28, 0.15);
-        }
+        /* RSVP */
+        .rsvp-section { background: #fff; padding: 100px 0; }
+        .rsvp-card { background: var(--bg-light); padding: 40px 20px; border-radius: 15px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); max-width: 900px; margin: 0 15px; }
+        @media (min-width: 768px) { .rsvp-card { margin: auto; padding: 40px; } }
+        .rsvp-card .form-control { border: none; border-bottom: 1px solid #ccc; border-radius: 0; padding: 10px 0; margin-bottom: 25px; background: transparent !important; }
+        .btn-rsvp { background: var(--primary); color: white; border: none; border-radius: 50px; padding: 15px 60px; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: 0.3s; width: 100%; max-width: 300px; }
+        .btn-rsvp:hover { background: #c56320; transform: scale(1.05); }
+        .rsvp-note { font-size: 0.95rem; color: #444; margin-bottom: 25px; line-height: 1.6; }
 
-        /* Subtle rotating glow effect behind the ring */
-        .monogram-circle::before {
-            content: '';
-            position: absolute;
-            width: 110%;
-            height: 110%;
-            background: radial-gradient(circle, rgba(252,246,186,0.3) 0%, transparent 70%);
-            z-index: -1;
-        }
-
-        /* 4. Deep Navy Blue Theme Typography */
-        .initials {
-            font-family: 'Great Vibes', cursive;
-            font-size: 18vh;
-            /* Rich Navy Blue base with a subtle midnight gradient */
-            background: linear-gradient(to bottom, #1d2d44, #0d1b2a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 0.9;
-            margin-bottom: 2vh;
-            opacity: 0;
-            animation: fadeInText 2s ease-out 1.2s forwards;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .full-names {
-            font-size: 2.6vh;
-            /* Premium Navy Blue text */
-            color: #0d1b2a;
-            letter-spacing: 0.45em;
-            text-transform: uppercase;
-            font-weight: 600;
-            opacity: 0;
-            animation: fadeInText 2s ease-out 2.2s forwards;
-            white-space: nowrap;
-        }
-
-        /* Clean CSS Animations */
-        @keyframes fadeInRing {
-            from { opacity: 0; transform: scale(0.85); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes fadeInText {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* Footer */
+        .footer-countdown { background: var(--dark); padding: 80px 0; color: white; text-align: center; }
+        .timer-val { font-size: 2.5rem; font-weight: 700; color: var(--primary); display: block; }
+        @media (min-width: 768px) { .timer-val { font-size: 3rem; } }
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .heart-divider { display: flex; align-items: center; justify-content: center; margin: 15px 0; }
+        .heart-divider::before, .heart-divider::after { content: ''; width: 50px; height: 1px; background: var(--primary); margin: 0 15px; }
     </style>
 </head>
-<body>
 
-    <canvas class="background-canvas" id="bokehCanvas"></canvas>
+<body data-spy="scroll" data-target=".navbar">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark shadow-sm">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navLinks"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navLinks">
+                <ul class="navbar-nav mx-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link px-2" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="#couple">The Couple</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="#story">Our Story</a></li>
+                    <li class="nav-item d-none d-lg-block"><a href="#" class="navbar-brand mx-4"><h1 class="font-secondary text-white" style="font-size: 28px; margin:0;">Christian <span style="color:var(--primary)">&</span> Razel</h1></a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="#entourage">Entourage</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="#dress-code">Dress Code</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="#gift">Gift Guide</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="#event">Event</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="#rsvp">RSVP</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <div class="led-container">
-        <div class="monogram-circle">
-            <div class="initials">R&C</div>
-            <div class="full-names">Razel & Christian</div>
+    <div id="home" class="hero-header">
+        <div>
+            <h1 class="display-1 font-secondary">Christian & Razel</h1>
+            <div class="d-inline-block border-top border-bottom border-light py-2 px-4 mt-3">
+                <h3 class="text-uppercase m-0" style="letter-spacing: 5px; font-size: 1rem;">May 30, 2026</h3>
+            </div>
         </div>
     </div>
 
+    <div id="couple" class="couple-section">
+        <div class="container text-center">
+            <div class="section-title">
+                <h1 class="font-secondary">The Happy Couple</h1>
+                <div class="heart-divider"><i class="fa fa-heart text-primary"></i></div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-md-5">
+                    <img src="https://i.imgur.com/Wo7h7zM.jpeg" class="couple-img" alt="Christian">
+                    <h2 class="font-secondary couple-name">Christian</h2>
+                    <p class="text-muted text-uppercase" style="letter-spacing: 2px;">The Groom</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa fa-heart fa-3x text-primary d-none d-md-block"></i>
+                </div>
+                <div class="col-md-5">
+                    <img src="https://i.imgur.com/vEGgau5.jpeg" class="couple-img" alt="Razel">
+                    <h2 class="font-secondary couple-name">Razel</h2>
+                    <p class="text-muted text-uppercase" style="letter-spacing: 2px;">The Bride</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="story" class="story-section text-center">
+        <div class="container">
+            <div class="section-title">
+                <h1 class="font-secondary">Our Story</h1>
+                <div class="heart-divider"><i class="fa fa-heart text-primary"></i></div>
+            </div>
+            <div class="story-content">
+                <p>Our story began with a chance meeting at a friend’s gathering 8 years ago. What started as a simple conversation quickly turned into shared adventures, late-night talks, and dreams of a future together.</p>
+                <p>Today, surrounded by the people we care about most, we are excited to begin this next chapter of our lives.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="gallery" class="gallery-wrapper">
+        <div class="gallery-header-overlay">
+            <h1 class="font-secondary" style="font-size: 3rem;">Our Gallery</h1>
+            <div class="heart-divider"><i class="fa fa-heart text-white"></i></div>
+        </div>
+        <div class="slider-nav">
+            <button class="nav-btn" onclick="manualScroll(-300)"><i class="fa fa-chevron-left"></i></button>
+            <button class="nav-btn" onclick="manualScroll(300)"><i class="fa fa-chevron-right"></i></button>
+        </div>
+        <div class="gallery-container-scroll" id="scrollCont">
+            <div class="gallery-item"><img src="https://i.imgur.com/a0YAuld.jpeg"></div>
+            <div class="gallery-item"><img src="https://i.imgur.com/ve8u05s.jpeg"></div>
+            <div class="gallery-item"><img src="https://i.imgur.com/YVAjrNu.jpeg"></div>
+            <div class="gallery-item"><img src="https://i.imgur.com/3taFtYM.jpeg"></div>
+            <div class="gallery-item"><img src="https://i.imgur.com/bQzDomI.jpeg"></div>
+            <div class="gallery-item"><img src="https://i.imgur.com/ikUqEIE.jpeg"></div>
+            <div class="gallery-item"><img src="https://i.imgur.com/ZNTeK9H.jpeg"></div>
+            <div class="gallery-item"><img src="https://i.imgur.com/v3jd8wS.jpeg"></div>
+            <div class="gallery-item"><img src="https://i.imgur.com/srWje1g.jpeg"></div>
+            <div class="gallery-item"><img src="https://i.imgur.com/iSXiVBa.jpeg"></div>
+            <div class="gallery-item"><img src="https://i.imgur.com/8kQnPag.jpeg"></div>
+            <div class="gallery-item"><img src="https://i.imgur.com/GPkxsNQ.jpeg"></div>
+        </div>
+    </div>
+
+    <div id="entourage" class="entourage-container">
+        <div class="container text-center">
+            <div class="section-title">
+                <h1 class="font-secondary">The Entourage</h1>
+                <div class="heart-divider"><i class="fa fa-heart text-primary"></i></div>
+            </div>
+            
+            <div class="row mb-5 justify-content-center">
+                <div class="col-md-5 mb-4">
+                    <span class="parent-title">Groom's Parents</span>
+                    <ul class="name-list">
+                        <li>Mrs. Elizabeth Oblena</li>
+                        <li>Mr. Ronaldo Oblena</li>
+                        <li>Mr. Cesario Veluya</li>
+                    </ul>
+                </div>
+                <div class="col-md-5 mb-4">
+                    <span class="parent-title">Bride's Parents</span>
+                    <ul class="name-list">
+                        <li>Mrs. Vivian Advincula</li>
+                        <li>Mr. Charlie Arciaga</li>
+                        <li>Mr. Ricardo Advincula</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <span class="main-role-title">Primary Sponsors</span>
+                <div class="row justify-content-center">
+                    <div class="col-md-4 col-11 border-right">
+                        <span class="role-title">Ninong</span>
+                        <ul class="name-list">
+                            <li>Mr. Redentor Dizon III</li>
+                            <li>Mr. Bernard Advincula</li>
+                            <li>Mr. Arnold Obnamia</li>
+                            <li>Mr. Rene Faller</li>
+                            <li>Mr. Orlando Veluya</li>
+                            <li>Mr. Gerry Advincula</li>
+                            <li>Mr. Anthony Aparte</li>
+                            <li>Mr. Brian Dealino</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-11">
+                        <span class="role-title">Ninang</span>
+                        <ul class="name-list">
+                            <li>Mrs. Ria Marin</li>
+                            <li>Mrs. Edeltrudes Advincula</li>
+                            <li>Mrs. Bernadette Dean</li>
+                            <li>Mrs. Cornelia Villalon</li>
+                            <li>Mrs. Arlene Mancenido</li>
+                            <li>Mrs. Lucilla Oblea</li>
+                            <li>Ms. Tina Ilasin</li>
+                            <li>Ms. Lynzel Abogado</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <span class="main-role-title">Secondary Sponsors</span>
+                <div class="row mb-4">
+                    <div class="col-md-4"><span class="role-title">Best Man</span><p class="name-list">Jefferson Villa</p></div>
+                    <div class="col-md-4"><span class="role-title">Maid of Honor</span><p class="name-list">Camille Rada</p></div>
+                    <div class="col-md-4"><span class="role-title">Matron of Honor</span><p class="name-list">Veronica Vitasa</p></div>
+                </div>
+                
+                <div class="row mb-5">
+                    <div class="col-md-4 col-12"><i class="fas fa-fire bearer-icon"></i><span class="role-title">Candle</span><ul class="name-list"><li>Carlo Nombrefia</li><li>Julia Venzuela</li></ul></div>
+                    <div class="col-md-4 col-12"><i class="fas fa-layer-group bearer-icon"></i><span class="role-title">Veil</span><ul class="name-list"><li>Isaiah Veluz</li><li>Moreen Ibardelosa</li></ul></div>
+                    <div class="col-md-4 col-12"><i class="fas fa-link bearer-icon"></i><span class="role-title">Cord</span><ul class="name-list"><li>Russel Cias</li><li>Nhica Oblena</li></ul></div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6 col-12 border-right">
+                        <span class="role-title">Groomsmen</span>
+                        <ul class="name-list">
+                            <li>Alexis Batulan</li>
+                            <li>Aaron Agpi</li>
+                            <li>Joshua Carrancho</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <span class="role-title">Bridesmaids</span>
+                        <ul class="name-list">
+                            <li>Ronna Vee Develuz</li>
+                            <li>Dayra Delmoro</li>
+                            <li>Tricia Abaricia</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <span class="main-role-title">Bearers & Flowers</span>
+                <div class="row mb-4">
+                    <div class="col-md-4 col-6"><i class="fas fa-ring bearer-icon"></i><span class="role-title">Ring Bearer</span><p class="name-list">Aldrin Veluya</p></div>
+                    <div class="col-md-4 col-6"><i class="fas fa-coins bearer-icon"></i><span class="role-title">Coin Bearer</span><p class="name-list">Bohdan Dizon</p></div>
+                    <div class="col-md-4 col-12"><i class="fas fa-bible bearer-icon"></i><span class="role-title">Bible Bearer</span><p class="name-list">Dwight Advincula</p></div>
+                </div>
+                <div class="row mb-4 justify-content-center">
+                    <div class="col-md-3 col-6 mb-4">
+                        <i class="fas fa-user-tie bearer-icon"></i>
+                        <span class="role-title">Little Groom</span>
+                        <p class="name-list">Charleslian Arciaga</p>
+                    </div>
+                    <div class="col-md-3 col-6 mb-4">
+                        <i class="fas fa-female bearer-icon"></i>
+                        <span class="role-title">Little Bride</span>
+                        <p class="name-list">Darianne Advincula</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12"><i class="fas fa-spa bearer-icon"></i><span class="role-title">Flower Girls</span><ul class="name-list"><li>Sheila De Guzman</li><li>Abegail Delin</li><li>Darianne Ong</li></ul></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dress-code" class="container py-5 text-center">
+        <div class="section-title">
+            <h1 class="font-secondary">Dress Code</h1>
+            <div class="heart-divider"><i class="fa fa-heart text-primary"></i></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8 px-4">
+                <div class="row mb-3">
+                    <div class="col-6 text-right"><strong>Ninong:</strong> Coat & Slacks</div>
+                    <div class="col-6 text-left"><strong>Groomsmen:</strong> Coat & Slacks</div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-6 text-right"><strong>Ninang:</strong> Classic long gown</div>
+                    <div class="col-6 text-left"><strong>Bridesmaids:</strong> Navy blue long gown</div>
+                </div>
+                <p class="mb-4"><strong>Guests:</strong> Formal / Semi-Formal</p>
+                <div class="mt-4">
+                    <p class="text-uppercase small font-weight-bold" style="letter-spacing: 2px;">Wedding Color Palette</p>
+                    <div class="color-circle" style="background-color: #ffffff;" title="White"></div>
+                    <div class="color-circle" style="background-color: #87CEEB;" title="Sky Blue"></div>
+                    <div class="color-circle" style="background-color: #1E90FF;" title="Dodger Blue"></div>
+                    <div class="color-circle" style="background-color: #0000FF;" title="Navy Blue"></div>
+                    <div class="color-circle" style="background-color: #808080;" title="Gray"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="gift" class="gift-section">
+        <div class="container d-flex justify-content-center">
+            <div class="gift-card">
+                <div class="gift-icon"><i class="fas fa-envelope-open-text"></i></div>
+                <div class="gift-text">
+                    <p>Your presence is truly the best gift we could ask for. But if you desire to give us a gift, a <strong>monetary gift</strong> is one we humbly suggest.</p>
+                </div>
+                <div style="width: 60px; height: 2px; background: var(--primary); margin: 20px auto;"></div>
+                <p class="small text-muted text-uppercase" style="letter-spacing: 2px;">Thank you for your love and generosity</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="event" class="container py-5 text-center">
+        <div class="section-title">
+            <h1 class="font-secondary">Wedding Event</h1>
+            <div class="heart-divider"><i class="fa fa-heart text-primary"></i></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 border-right mb-4">
+                <h4 class="font-weight-bold">Ceremony</h4>
+                <p>St. Louis Bishop Parish Church<br>09:00 AM</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h4 class="font-weight-bold">Reception</h4>
+                <p>Benito Pillar Yao Hall<br>12:00 PM</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="rsvp" class="rsvp-section text-center">
+        <div class="container d-flex justify-content-center">
+            <div class="rsvp-card">
+                <h1 class="font-secondary" style="font-size: 3.5rem; color: #111;">RSVP</h1>
+                
+                <div class="rsvp-note px-3">
+                    <p>To allow all guests to relax and enjoy the evening, we have chosen to make our wedding <strong>ADULTS-ONLY</strong>.</p>
+                    <p>Please note also that this invitation is for <strong>YOU ONLY</strong>, as we are keeping our celebration intimate. We’ve strictly reserved 1 seat for you.</p>
+                </div>
+
+                <form action="https://formspree.io/f/mjgedajz" method="POST">
+                    <input type="hidden" name="_next" value="#rsvp">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <input type="text" name="Guest Name" class="form-control" placeholder="Full Name" required>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <input type="tel" name="Phone Number" class="form-control" placeholder="Phone Number" required>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <select name="Attendance" class="form-control" required>
+                                <option value="" disabled selected>Will you attend?</option>
+                                <option value="Yes">Yes, with pleasure</option>
+                                <option value="No">Regretfully, No</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <input type="text" name="Personal Message" class="form-control" placeholder="Message (Optional)">
+                        </div>
+                    </div>
+                    
+                    <div class="mt-2 mb-4">
+                        <small class="text-muted">Please RSVP by April 30, 2026</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-rsvp">Submit RSVP</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-countdown">
+        <div class="container">
+            <h2 class="font-secondary mb-5" style="font-size: 3rem;">Countdown</h2>
+            <div id="timer" class="row justify-content-center">
+                <div class="col-3 col-md-2"><span id="days" class="timer-val">00</span><small class="text-uppercase">Days</small></div>
+                <div class="col-3 col-md-2"><span id="hours" class="timer-val">00</span><small class="text-uppercase">Hours</small></div>
+                <div class="col-3 col-md-2"><span id="mins" class="timer-val">00</span><small class="text-uppercase">Mins</small></div>
+                <div class="col-3 col-md-2"><span id="secs" class="timer-val">00</span><small class="text-uppercase">Secs</small></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script>
-        const canvas = document.getElementById('bokehCanvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        const particles = [];
-        const particleCount = 35; // Kept clean and minimal
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.radius = Math.random() * 25 + 12;
-                this.speedY = -(Math.random() * 0.2 + 0.05); // Slow, floating upward motion
-                this.opacity = Math.random() * 0.4 + 0.1;
-                // Luxury warm champagne/gold particle colors
-                this.color = `rgba(${Math.floor(Math.random() * 20 + 230)}, ${Math.floor(Math.random() * 20 + 200)}, 160, ${this.opacity})`;
+        const weddingDate = new Date("May 30, 2026 09:00:00").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+            if (diff > 0) {
+                document.getElementById("days").innerHTML = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById("hours").innerHTML = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("mins").innerHTML = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("secs").innerHTML = Math.floor((diff % (1000 * 60)) / 1000);
             }
-            update() {
-                this.y += this.speedY;
-                if (this.y + this.radius < 0) {
-                    this.y = canvas.height + this.radius;
-                    this.x = Math.random() * canvas.width;
+        }, 1000);
+
+        const scrollContainer = document.getElementById('scrollCont');
+        let step = 1;
+        let isPaused = false;
+
+        function autoScroll() {
+            if(!isPaused) {
+                scrollContainer.scrollLeft += step;
+                if (scrollContainer.scrollLeft >= (scrollContainer.scrollWidth - scrollContainer.clientWidth)) {
+                    scrollContainer.scrollLeft = 0;
                 }
             }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            }
         }
 
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
+        let scrollInterval = setInterval(autoScroll, 30);
+
+        function manualScroll(amount) {
+            scrollContainer.scrollBy({left: amount, behavior: 'smooth'});
+            isPaused = true;
+            setTimeout(() => { isPaused = false; }, 3000);
         }
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
+        scrollContainer.addEventListener('mouseover', () => { isPaused = true; });
+        scrollContainer.addEventListener('mouseout', () => { isPaused = false; });
+        scrollContainer.addEventListener('touchstart', () => { isPaused = true; });
+        scrollContainer.addEventListener('touchend', () => { setTimeout(() => { isPaused = false; }, 3000); });
     </script>
 </body>
 </html>
